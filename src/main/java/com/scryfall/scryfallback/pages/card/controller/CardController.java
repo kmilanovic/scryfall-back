@@ -3,6 +3,7 @@ package com.scryfall.scryfallback.pages.card.controller;
 import com.scryfall.scryfallback.pages.card.model.response.Card;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
 import com.scryfall.scryfallback.pages.card.service.CardService;
+import com.scryfall.scryfallback.pages.set.model.response.Set;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +37,10 @@ public class CardController {
     @PostMapping("search")
     public CardWrapper getCardsBySearch(@RequestBody SearchTerm searchTerm) {
         return cardService.getCardsBySearch(searchTerm);
+    }
+
+    @PostMapping("search-by-code")
+    public CardWrapper getCardsBySetCode(@RequestBody Set set) {
+        return cardService.getCardsBySetCode(set);
     }
 }

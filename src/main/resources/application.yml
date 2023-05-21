@@ -16,4 +16,4 @@ spring:
 
 
 scryfall:
-  url: https://api.scryfall.com/cards/
+  url: https://api.scryfall.com/

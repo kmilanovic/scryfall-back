@@ -2,6 +2,7 @@ package com.scryfall.scryfallback.pages.set.controller;
 
 import com.scryfall.scryfallback.pages.set.model.dto.SetDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
+import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.pages.set.service.SetService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +18,14 @@ public class SetController {
         this.setService = setService;
     }
 
+    @GetMapping("/all-api")
+    public SetWrapper getAllSetsFromAPI() {
+        return setService.getAllSetsFromAPI();
+    }
+
     @GetMapping("/all")
     public List<SetDTO> getAllSets() {
-       return setService.getAllSets();
+        return setService.getAllSets();
     }
 
     @PostMapping("/add")

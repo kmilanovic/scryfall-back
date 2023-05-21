@@ -2,6 +2,7 @@ package com.scryfall.scryfallback.pages.card.service;
 
 import com.scryfall.scryfallback.pages.card.model.response.Card;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
+import com.scryfall.scryfallback.pages.set.model.response.Set;
 import com.scryfall.scryfallback.shared.ScryfallHandler;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
@@ -32,5 +33,10 @@ public class CardServiceImpl implements CardService {
     @Override
     public CardWrapper getCardsBySearch(SearchTerm searchTerm) {
         return scryfallHandler.getCardsBySearch(searchTerm);
+    }
+
+    @Override
+    public CardWrapper getCardsBySetCode(Set set) {
+        return scryfallHandler.getCardsBySetCode(set);
     }
 }
