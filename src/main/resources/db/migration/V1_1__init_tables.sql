@@ -19,83 +19,39 @@ alter table _user
 ---------------------------------------------------
 -- Table `set`
 ---------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS public.set
+CREATE TABLE IF NOT EXISTS set
 (
-    id      bigserial not null
-        constraint set_pkey
-            primary key,
-    name    text      not null
-        constraint name_unique
-            unique,
-    user_id bigserial REFERENCES _user (id)
+    set_id       SERIAL PRIMARY KEY,
+    object       VARCHAR(255),
+    id           VARCHAR(255),
+    code         VARCHAR(255),
+    name         VARCHAR(255),
+    tcgplayer_id VARCHAR(255),
+    scryfall_uri VARCHAR(255),
+    search_uri   VARCHAR(255),
+    released_at  VARCHAR(255),
+    set_type     VARCHAR(255),
+    card_count   VARCHAR(255),
+    digital      VARCHAR(255),
+    nonfoil_only VARCHAR(255),
+    foil_only    VARCHAR(255),
+    icon_svg_uri VARCHAR(255)
 );
-
 ---------------------------------------------------
 -- Table `card`
 ---------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS public.card
+CREATE TABLE IF NOT EXISTS card
 (
-    id                bigserial not null
-        constraint card_pkey
-            primary key,
-    oracle_id         UUID,
-    multiverse_ids    INTEGER[],
-    mtgo_id           INTEGER,
-    mtgo_foil_id      INTEGER,
-    tcgplayer_id      INTEGER,
-    cardmarket_id     INTEGER,
-    name              TEXT,
-    lang              TEXT,
-    released_at       DATE,
-    uri               TEXT,
-    scryfall_uri      TEXT,
-    layout            TEXT,
-    highres_image     BOOLEAN,
-    image_status      TEXT,
-    mana_cost         TEXT,
-    cmc               INTEGER,
-    type_line         TEXT,
-    oracle_text       TEXT,
-    colors            TEXT[],
-    color_identity    TEXT[],
-    keywords          TEXT[],
-    legalities        JSONB,
-    games             TEXT[],
-    reserved          BOOLEAN,
-    foil              BOOLEAN,
-    nonfoil           BOOLEAN,
-    finishes          TEXT[],
-    oversized         BOOLEAN,
-    promo             BOOLEAN,
-    reprint           BOOLEAN,
-    variation         BOOLEAN,
-    set_id            bigserial,
-    set_name          TEXT,
-    set_type          TEXT,
-    set_uri           TEXT,
-    set_search_uri    TEXT,
-    scryfall_set_uri  TEXT,
-    rulings_uri       TEXT,
-    prints_search_uri TEXT,
-    collector_number  TEXT,
-    digital           BOOLEAN,
-    rarity            TEXT,
-    flavor_text       TEXT,
-    card_back_id      UUID,
-    artist            TEXT,
-    artist_ids        TEXT[],
-    illustration_id   UUID,
-    border_color      TEXT,
-    frame             TEXT,
-    full_art          BOOLEAN,
-    textless          BOOLEAN,
-    booster           BOOLEAN,
-    story_spotlight   BOOLEAN,
-    edhrec_rank       INTEGER,
-    penny_rank        INTEGER,
-    prices            JSONB,
-    related_uris      JSONB,
-    purchase_uris     JSONB
+    card_id SERIAL PRIMARY KEY,
+    id      VARCHAR(255) NOT NULL
+);
+
+---------------------------------------------------
+-- Table `card_set_list` many2many
+---------------------------------------------------
+CREATE TABLE IF NOT EXISTS card_set_list
+(
+    card_id BIGINT REFERENCES card (card_id) ON DELETE CASCADE,
+    set_id  BIGINT REFERENCES set (set_id) ON DELETE CASCADE,
+    PRIMARY KEY (card_id, set_id)
 );

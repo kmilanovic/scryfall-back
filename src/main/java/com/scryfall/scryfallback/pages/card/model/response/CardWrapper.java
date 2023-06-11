@@ -12,5 +12,5 @@ public class CardWrapper {
     private Integer total_cards;
     private boolean has_more;
     private String next_page;
-    private List<Card> data;
+    private List<CardResponse> data;
 }

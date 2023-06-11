@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/scryfall
     username: scryfall-user
-    password: scryfall-password
+    password: scryfall
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

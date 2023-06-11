@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Set {
+public class SetResponse {
 
     private String object;
     private String id;

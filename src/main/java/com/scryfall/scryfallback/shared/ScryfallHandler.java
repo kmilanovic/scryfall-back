@@ -1,8 +1,8 @@
 package com.scryfall.scryfallback.shared;
 
-import com.scryfall.scryfallback.pages.card.model.response.Card;
+import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
-import com.scryfall.scryfallback.pages.set.model.response.Set;
+import com.scryfall.scryfallback.pages.set.model.response.SetResponse;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
@@ -29,20 +29,20 @@ public class ScryfallHandler {
         this.restTemplate = restTemplate;
     }
 
-    public Card getCardById(Card card) {
-        String url = scryfallUrl + "cards/" + card.getId();
+    public CardResponse getCardById(CardResponse cardResponse) {
+        String url = scryfallUrl + "cards/" + cardResponse.getId();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        ResponseEntity<Card> responseEntity = restTemplate.exchange(
+        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
                 uriComponentsBuilder.encode().build().toUri(),
                 HttpMethod.GET,
                 null,
-                Card.class
+                CardResponse.class
         );
         return responseEntity.getBody();
     }
 
-    public RulingWrapper getCardRulings(Card card) {
-        String url = scryfallUrl + "cards/" + card.getId() + "/rulings";
+    public RulingWrapper getCardRulings(CardResponse cardResponse) {
+        String url = scryfallUrl + "cards/" + cardResponse.getId() + "/rulings";
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
         ResponseEntity<RulingWrapper> responseEntity = restTemplate.exchange(
                 uriComponentsBuilder.encode().build().toUri(),
@@ -80,8 +80,8 @@ public class ScryfallHandler {
         return responseEntity.getBody();
     }
 
-    public CardWrapper getCardsBySetCode(Set set) {
-        String url = scryfallUrl + "cards/" + "/search?order=set&q=set:" + set.getCode() + "&unique=prints";
+    public CardWrapper getCardsBySetCode(SetResponse setResponse) {
+        String url = scryfallUrl + "cards/" + "/search?order=set&q=set:" + setResponse.getCode() + "&unique=prints";
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
         ResponseEntity<CardWrapper> responseEntity = restTemplate.exchange(
                 uriComponentsBuilder.encode().build().toUri(),

@@ -10,5 +10,5 @@ import java.util.List;
 public class SetWrapper {
     private String object;
     private boolean has_more;
-    private List<Set> data;
+    private List<SetResponse> data;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Card {
+public class CardResponse {
     private String object;
     private String id;
     private String oracle_id;

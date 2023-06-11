@@ -1,18 +1,21 @@
 package com.scryfall.scryfallback.pages.card.service;
 
-import com.scryfall.scryfallback.pages.card.model.response.Card;
+import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
-import com.scryfall.scryfallback.pages.set.model.response.Set;
+import com.scryfall.scryfallback.pages.set.model.response.SetResponse;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
+import com.scryfall.scryfallback.shared.model.command.SaveCardInSetCommand;
 
 public interface CardService {
 
-    Card getCardById(Card card);
+    CardResponse getCardById(CardResponse cardResponse);
 
-    RulingWrapper getCardRulings(Card card);
+    RulingWrapper getCardRulings(CardResponse cardResponse);
 
     CardWrapper getCardsBySearch(SearchTerm searchTerm);
 
-    CardWrapper getCardsBySetCode(Set set);
+    CardWrapper getCardsBySetCode(SetResponse setResponse);
+
+    void saveCardInSet(SaveCardInSetCommand command);
 }
