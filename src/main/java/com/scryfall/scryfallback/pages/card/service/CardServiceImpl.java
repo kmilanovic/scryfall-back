@@ -10,10 +10,12 @@ import com.scryfall.scryfallback.pages.set.repository.SetRepository;
 import com.scryfall.scryfallback.shared.ScryfallHandler;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
+import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
 import com.scryfall.scryfallback.shared.model.command.SaveCardInSetCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -65,5 +67,11 @@ public class CardServiceImpl implements CardService {
 
         cardRepository.save(card);
         setRepository.save(set);
+    }
+
+    @Override
+    public List<Card> getCardsBySet(ByIdCommand command) {
+        Optional<Set> set = setRepository.findById(command.getId());
+        return set.get().getCards();
     }
 }
