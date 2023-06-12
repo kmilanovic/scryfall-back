@@ -10,8 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -55,16 +57,30 @@ public class ScryfallHandler {
     }
 
     public CardWrapper getCardsBySearch(SearchTerm searchTerm) {
+        if (searchTerm == null || searchTerm.getTerm().isEmpty()) {
+            return new CardWrapper();
+        }
         String url = scryfallUrl + "cards/" + "/search?order=cmc&q=" + searchTerm.getTerm();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        ResponseEntity<CardWrapper> responseEntity = restTemplate.exchange(
-                uriComponentsBuilder.encode().build().toUri(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-        );
-        return responseEntity.getBody();
+
+        try {
+            ResponseEntity<CardWrapper> responseEntity = restTemplate.exchange(
+                    uriComponentsBuilder.encode().build().toUri(),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new CardWrapper();
+            } else {
+                throw ex;
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public SetWrapper getAllSets() {
