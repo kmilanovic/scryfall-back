@@ -27,8 +27,7 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public List<SetDTO> getAllSets() {
-        Long userId = 8L;
+    public List<SetDTO> getAllSets(Long userId) {
         List<Set> setList = setRepository.findAllByUserId(userId);
         return SetDTO.fromEntityList(setList, userId);
     }

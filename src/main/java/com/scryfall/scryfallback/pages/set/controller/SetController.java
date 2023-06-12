@@ -24,8 +24,8 @@ public class SetController {
     }
 
     @GetMapping("/all")
-    public List<SetDTO> getAllSets() {
-        return setService.getAllSets();
+    public List<SetDTO> getAllSets(@RequestHeader("userId") Long userId) {
+        return setService.getAllSets(userId);
     }
 
     @PostMapping("/add")

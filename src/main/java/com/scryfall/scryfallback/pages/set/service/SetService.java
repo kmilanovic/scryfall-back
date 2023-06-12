@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SetService {
 
-    List<SetDTO> getAllSets();
+    List<SetDTO> getAllSets(Long userId);
 
     Set addSet(Set set);
 
