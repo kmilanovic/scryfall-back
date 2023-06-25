@@ -1,6 +1,7 @@
 package com.scryfall.scryfallback.pages.set.controller;
 
 import com.scryfall.scryfallback.pages.set.model.dto.SetDTO;
+import com.scryfall.scryfallback.pages.set.model.dto.SetIconDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.pages.set.service.SetService;
@@ -26,6 +27,11 @@ public class SetController {
     @GetMapping("/all")
     public List<SetDTO> getAllSets(@RequestHeader("userId") Long userId) {
         return setService.getAllSets(userId);
+    }
+
+    @GetMapping("/set-icon/all")
+    public List<SetIconDTO> getAllSetIcons() {
+        return setService.getAllSetIcons();
     }
 
     @PostMapping("/add")

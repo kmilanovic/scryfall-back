@@ -1,5 +1,6 @@
 package com.scryfall.scryfallback.pages.set.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class Set {
     private String icon_svg_uri;
     private Long user_id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "card_set_list",
             joinColumns = @JoinColumn(name = "set_id"),

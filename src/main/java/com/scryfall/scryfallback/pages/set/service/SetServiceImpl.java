@@ -2,7 +2,9 @@ package com.scryfall.scryfallback.pages.set.service;
 
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
 import com.scryfall.scryfallback.pages.set.model.dto.SetDTO;
+import com.scryfall.scryfallback.pages.set.model.dto.SetIconDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
+import com.scryfall.scryfallback.pages.set.model.entity.SetIcon;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.pages.set.repository.SetRepository;
 import com.scryfall.scryfallback.shared.ScryfallHandler;
@@ -30,6 +32,12 @@ public class SetServiceImpl implements SetService {
     public List<SetDTO> getAllSets(Long userId) {
         List<Set> setList = setRepository.findAllByUserId(userId);
         return SetDTO.fromEntityList(setList, userId);
+    }
+
+    @Override
+    public List<SetIconDTO> getAllSetIcons() {
+        List<SetIcon> setIconList = setRepository.findAllIcons();
+        return SetIconDTO.fromEntityList(setIconList);
     }
 
     @Override

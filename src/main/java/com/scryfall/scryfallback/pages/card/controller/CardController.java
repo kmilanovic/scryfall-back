@@ -10,7 +10,10 @@ import com.scryfall.scryfallback.shared.model.SearchTerm;
 import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
 import com.scryfall.scryfallback.shared.model.command.SaveCardInSetCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -51,7 +54,7 @@ public class CardController {
         cardService.saveCardInSet(command);
     }
 
-    @GetMapping("get-by-set")
+    @PostMapping("get-by-set")
     public List<Card> getCardsBySet(@RequestBody ByIdCommand command) {
         return cardService.getCardsBySet(command);
     }
