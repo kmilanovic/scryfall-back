@@ -6,12 +6,13 @@ import com.scryfall.scryfallback.pages.set.model.dto.SetDTO;
 import com.scryfall.scryfallback.pages.set.model.dto.SetIconDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface SetService {
 
-    List<SetDTO> getAllSets(Long userId);
+    Page<SetDTO> getAllSets(Long userId, int pageIndex, int pageSize);
 
     Set addSet(Set set);
 

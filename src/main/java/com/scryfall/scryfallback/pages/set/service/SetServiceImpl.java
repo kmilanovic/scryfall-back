@@ -8,6 +8,10 @@ import com.scryfall.scryfallback.pages.set.model.entity.SetIcon;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.pages.set.repository.SetRepository;
 import com.scryfall.scryfallback.shared.ScryfallHandler;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,9 +33,13 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public List<SetDTO> getAllSets(Long userId) {
-        List<Set> setList = setRepository.findAllByUserId(userId);
-        return SetDTO.fromEntityList(setList, userId);
+    public Page<SetDTO> getAllSets(Long userId, int pageIndex, int pageSize) {
+        int indexOfPage = pageIndex - 1;
+        Pageable pageable = PageRequest.of(indexOfPage, pageSize);
+        Page<Set> setPage = setRepository.findAllByUserId(userId, pageable);
+
+        List<SetDTO> setDTOList = SetDTO.fromEntityList(setPage.getContent(), userId);
+        return new PageImpl<>(setDTOList, pageable, setPage.getTotalElements());
     }
 
     @Override

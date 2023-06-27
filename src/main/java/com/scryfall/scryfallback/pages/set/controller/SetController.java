@@ -5,6 +5,7 @@ import com.scryfall.scryfallback.pages.set.model.dto.SetIconDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
 import com.scryfall.scryfallback.pages.set.service.SetService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,11 @@ public class SetController {
     }
 
     @GetMapping("/all")
-    public List<SetDTO> getAllSets(@RequestHeader("userId") Long userId) {
-        return setService.getAllSets(userId);
+    public Page<SetDTO> getAllSets(
+            @RequestHeader("userId") Long userId,
+            @RequestParam(defaultValue = "0") int pageIndex,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return setService.getAllSets(userId, pageIndex, pageSize);
     }
 
     @GetMapping("/set-icon/all")
