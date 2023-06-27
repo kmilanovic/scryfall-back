@@ -25,6 +25,10 @@ public class Card {
 
     private String id;
 
+    private String name;
+
+    private String image_uri_normal;
+
     public List<Set> getSets() {
         if (sets == null) {
             sets = new ArrayList<>();

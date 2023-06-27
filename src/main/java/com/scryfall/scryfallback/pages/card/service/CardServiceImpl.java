@@ -57,6 +57,8 @@ public class CardServiceImpl implements CardService {
     public void saveCardInSet(SaveCardInSetCommand command) {
         Card card = new Card();
         card.setId(command.getCardId());
+        card.setName(command.getCardName());
+        card.setImage_uri_normal(command.getImageUriNormal());
         Optional<Set> setOptional = setRepository.findById(command.getSetId());
         com.scryfall.scryfallback.pages.set.model.entity.Set set = setOptional.orElseThrow(() ->
                 new IllegalArgumentException("Set not found with ID: " + command.getSetId()));

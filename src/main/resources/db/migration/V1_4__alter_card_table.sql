@@ -1,0 +1,5 @@
+ALTER TABLE public.card
+    ADD COLUMN IF NOT EXISTS name VARCHAR(255);
+
+ALTER TABLE public.card
+    ADD COLUMN IF NOT EXISTS image_uri_normal VARCHAR(255);

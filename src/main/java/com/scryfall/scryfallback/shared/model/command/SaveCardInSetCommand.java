@@ -8,4 +8,6 @@ import lombok.Setter;
 public class SaveCardInSetCommand {
     private String cardId;
     private Long setId;
+    private String cardName;
+    private String imageUriNormal;
 }
