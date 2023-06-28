@@ -17,6 +17,9 @@ public interface SetRepository extends JpaRepository<Set, Long> {
     @Query("SELECT s FROM Set s WHERE s.user_id = :userId")
     Page<Set> findAllByUserId(Long userId, Pageable pageable);
 
+    @Query("SELECT s FROM Set s WHERE s.user_id = :userId")
+    List<Set> findAllByUserId(Long userId);
+
     @Query("SELECT si FROM SetIcon si")
     List<SetIcon> findAllIcons();
 }

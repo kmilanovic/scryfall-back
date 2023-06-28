@@ -25,12 +25,17 @@ public class SetController {
         return setService.getAllSetsFromAPI();
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all-paginated")
     public Page<SetDTO> getAllSets(
             @RequestHeader("userId") Long userId,
             @RequestParam(defaultValue = "0") int pageIndex,
             @RequestParam(defaultValue = "10") int pageSize) {
         return setService.getAllSets(userId, pageIndex, pageSize);
+    }
+
+    @GetMapping("/all")
+    public List<SetDTO> getAllSets(@RequestHeader("userId") Long userId) {
+        return setService.getAllSets(userId);
     }
 
     @GetMapping("/set-icon/all")

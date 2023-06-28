@@ -42,6 +42,11 @@ public class SetServiceImpl implements SetService {
         return new PageImpl<>(setDTOList, pageable, setPage.getTotalElements());
     }
 
+    public List<SetDTO> getAllSets(Long userId) {
+        List<Set> setList = setRepository.findAllByUserId(userId);
+        return SetDTO.fromEntityList(setList, userId);
+    }
+
     @Override
     public List<SetIconDTO> getAllSetIcons() {
         List<SetIcon> setIconList = setRepository.findAllIcons();

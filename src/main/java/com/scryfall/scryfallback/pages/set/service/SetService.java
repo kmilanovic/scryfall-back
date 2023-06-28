@@ -14,6 +14,8 @@ public interface SetService {
 
     Page<SetDTO> getAllSets(Long userId, int pageIndex, int pageSize);
 
+    List<SetDTO> getAllSets(Long userId);
+
     Set addSet(Set set);
 
     SetWrapper getAllSetsFromAPI();
