@@ -10,10 +10,8 @@ import com.scryfall.scryfallback.shared.model.SearchTerm;
 import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
 import com.scryfall.scryfallback.shared.model.command.SaveCardInSetCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,5 +55,13 @@ public class CardController {
     @PostMapping("get-by-set")
     public List<Card> getCardsBySet(@RequestBody ByIdCommand command) {
         return cardService.getCardsBySet(command);
+    }
+
+    @PostMapping("/get-by-set-paginated")
+    public Page<Card> getAllCardsBySetPaginated(
+            @RequestBody ByIdCommand command,
+            @RequestParam(defaultValue = "0") int pageIndex,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return cardService.getCardsBySet(command, pageIndex, pageSize);
     }
 }

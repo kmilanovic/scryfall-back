@@ -13,6 +13,10 @@ import com.scryfall.scryfallback.shared.model.SearchTerm;
 import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
 import com.scryfall.scryfallback.shared.model.command.SaveCardInSetCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,5 +79,16 @@ public class CardServiceImpl implements CardService {
     public List<Card> getCardsBySet(ByIdCommand command) {
         Optional<Set> set = setRepository.findById(command.getId());
         return set.get().getCards();
+    }
+
+    @Override
+    public Page<Card> getCardsBySet(ByIdCommand command, int pageIndex, int pageSize) {
+        int indexOfPage = pageIndex - 1;
+        Pageable pageable = PageRequest.of(indexOfPage, pageSize);
+
+        Page<Card> cardPage = cardRepository.findCardsBySetId(command.getId(), pageable);
+        List<Card> cards = cardPage.getContent();
+
+        return new PageImpl<>(cards, pageable, cardPage.getTotalElements());
     }
 }
