@@ -34,7 +34,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        //var refreshToken = jwtService.generateRefreshToken();
         return AuthenticationResponse.builder()
                 .email(user.getEmail())
                 .token(jwtToken)
@@ -52,7 +51,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        //var refreshToken = jwtService.generateRefreshToken();
         return AuthenticationResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -60,3 +58,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 }
+

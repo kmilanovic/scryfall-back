@@ -1,9 +1,10 @@
 package com.scryfall.scryfallback.pages.card.service;
 
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
+import com.scryfall.scryfallback.pages.card.model.request.CardRequest;
 import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
-import com.scryfall.scryfallback.pages.set.model.response.SetResponse;
+import com.scryfall.scryfallback.pages.set.model.request.SetRequest;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
 import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
@@ -14,13 +15,13 @@ import java.util.List;
 
 public interface CardService {
 
-    CardResponse getCardById(CardResponse cardResponse);
+    CardResponse getCardById(CardRequest cardRequest);
 
-    RulingWrapper getCardRulings(CardResponse cardResponse);
+    RulingWrapper getCardRulings(CardRequest cardRequest);
 
     CardWrapper getCardsBySearch(SearchTerm searchTerm);
 
-    CardWrapper getCardsBySetCode(SetResponse setResponse);
+    CardWrapper getCardsBySetCode(SetRequest setRequest);
 
 
     void saveCardInSet(SaveCardInSetCommand command);

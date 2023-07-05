@@ -1,11 +1,12 @@
 package com.scryfall.scryfallback.pages.card.service;
 
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
+import com.scryfall.scryfallback.pages.card.model.request.CardRequest;
 import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
 import com.scryfall.scryfallback.pages.card.repository.CardRepository;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
-import com.scryfall.scryfallback.pages.set.model.response.SetResponse;
+import com.scryfall.scryfallback.pages.set.model.request.SetRequest;
 import com.scryfall.scryfallback.pages.set.repository.SetRepository;
 import com.scryfall.scryfallback.shared.ScryfallHandler;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
@@ -38,13 +39,13 @@ public class CardServiceImpl implements CardService {
 
 
     @Override
-    public CardResponse getCardById(CardResponse cardResponse) {
-        return scryfallHandler.getCardById(cardResponse);
+    public CardResponse getCardById(CardRequest cardRequest) {
+        return scryfallHandler.getCardById(cardRequest);
     }
 
     @Override
-    public RulingWrapper getCardRulings(CardResponse cardResponse) {
-        return scryfallHandler.getCardRulings(cardResponse);
+    public RulingWrapper getCardRulings(CardRequest cardRequest) {
+        return scryfallHandler.getCardRulings(cardRequest);
     }
 
     @Override
@@ -53,8 +54,8 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardWrapper getCardsBySetCode(SetResponse setResponse) {
-        return scryfallHandler.getCardsBySetCode(setResponse);
+    public CardWrapper getCardsBySetCode(SetRequest setRequest) {
+        return scryfallHandler.getCardsBySetCode(setRequest);
     }
 
     @Override

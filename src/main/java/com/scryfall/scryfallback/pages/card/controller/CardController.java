@@ -1,10 +1,11 @@
 package com.scryfall.scryfallback.pages.card.controller;
 
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
+import com.scryfall.scryfallback.pages.card.model.request.CardRequest;
 import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
 import com.scryfall.scryfallback.pages.card.service.CardService;
-import com.scryfall.scryfallback.pages.set.model.response.SetResponse;
+import com.scryfall.scryfallback.pages.set.model.request.SetRequest;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
 import com.scryfall.scryfallback.shared.model.command.ByIdCommand;
@@ -28,13 +29,13 @@ public class CardController {
     }
 
     @PostMapping("get")
-    public CardResponse getCardById(@RequestBody CardResponse cardResponse) {
-        return cardService.getCardById(cardResponse);
+    public CardResponse getCardById(@RequestBody CardRequest cardRequest) {
+        return cardService.getCardById(cardRequest);
     }
 
     @PostMapping("rulings")
-    public RulingWrapper getCardRulings(@RequestBody CardResponse cardResponse) {
-        return cardService.getCardRulings(cardResponse);
+    public RulingWrapper getCardRulings(@RequestBody CardRequest cardRequest) {
+        return cardService.getCardRulings(cardRequest);
     }
 
     @PostMapping("search")
@@ -43,8 +44,8 @@ public class CardController {
     }
 
     @PostMapping("search-by-code")
-    public CardWrapper getCardsBySetCode(@RequestBody SetResponse setResponse) {
-        return cardService.getCardsBySetCode(setResponse);
+    public CardWrapper getCardsBySetCode(@RequestBody SetRequest setRequest) {
+        return cardService.getCardsBySetCode(setRequest);
     }
 
     @PostMapping("save-in-set")
