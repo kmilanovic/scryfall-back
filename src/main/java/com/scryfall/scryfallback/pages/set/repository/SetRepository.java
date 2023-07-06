@@ -22,4 +22,6 @@ public interface SetRepository extends JpaRepository<Set, Long> {
 
     @Query("SELECT si FROM SetIcon si")
     List<SetIcon> findAllIcons();
+
+    void deleteById(Long id);
 }

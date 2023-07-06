@@ -23,4 +23,6 @@ public interface SetService {
     void saveSetWithCards(Set set, List<Card> cards);
 
     List<SetIconDTO> getAllSetIcons();
+
+    void deleteSet(Long id);
 }

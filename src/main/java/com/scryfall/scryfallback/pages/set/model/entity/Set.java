@@ -37,7 +37,7 @@ public class Set {
     private Long user_id;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "card_set_list",
             joinColumns = @JoinColumn(name = "set_id"),
             inverseJoinColumns = @JoinColumn(name = "card_id"))

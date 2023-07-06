@@ -47,4 +47,9 @@ public class SetController {
     public Set addSet(@RequestBody Set set) {
         return setService.addSet(set);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteSet(@PathVariable Long id) {
+        setService.deleteSet(id);
+    }
 }

@@ -54,6 +54,11 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
+    public void deleteSet(Long id) {
+        setRepository.deleteById(id);
+    }
+
+    @Override
     public Set addSet(Set set) {
         return setRepository.save(set);
     }
