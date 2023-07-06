@@ -25,4 +25,6 @@ public interface SetService {
     List<SetIconDTO> getAllSetIcons();
 
     void deleteSet(Long id);
+
+    void deleteCardFromSet(Long setId, Long cardId);
 }

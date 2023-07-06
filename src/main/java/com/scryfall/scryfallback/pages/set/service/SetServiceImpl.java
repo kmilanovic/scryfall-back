@@ -1,6 +1,7 @@
 package com.scryfall.scryfallback.pages.set.service;
 
 import com.scryfall.scryfallback.pages.card.model.entity.Card;
+import com.scryfall.scryfallback.pages.card.repository.CardRepository;
 import com.scryfall.scryfallback.pages.set.model.dto.SetDTO;
 import com.scryfall.scryfallback.pages.set.model.dto.SetIconDTO;
 import com.scryfall.scryfallback.pages.set.model.entity.Set;
@@ -20,10 +21,12 @@ import java.util.List;
 public class SetServiceImpl implements SetService {
 
     private final SetRepository setRepository;
+    private final CardRepository cardRepository;
     private final ScryfallHandler scryfallHandler;
 
-    public SetServiceImpl(SetRepository setRepository, ScryfallHandler scryfallHandler) {
+    public SetServiceImpl(SetRepository setRepository, CardRepository cardRepository, ScryfallHandler scryfallHandler) {
         this.setRepository = setRepository;
+        this.cardRepository = cardRepository;
         this.scryfallHandler = scryfallHandler;
     }
 
@@ -56,6 +59,19 @@ public class SetServiceImpl implements SetService {
     @Override
     public void deleteSet(Long id) {
         setRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteCardFromSet(Long setId, Long cardId) {
+        Set set = setRepository.findById(setId).orElse(null);
+        if (set != null) {
+            List<Card> cards = set.getCards();
+            cards.removeIf(card -> card.getCard_id().equals(cardId));
+            setRepository.save(set);
+
+            // Delete the card from the card table
+            cardRepository.deleteById(cardId);
+        }
     }
 
     @Override

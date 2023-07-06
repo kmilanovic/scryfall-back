@@ -52,4 +52,11 @@ public class SetController {
     public void deleteSet(@PathVariable Long id) {
         setService.deleteSet(id);
     }
+
+    @DeleteMapping("/{setId}/card/{cardId}")
+    public void deleteCardFromSet(
+            @PathVariable Long setId,
+            @PathVariable Long cardId) {
+        setService.deleteCardFromSet(setId, cardId);
+    }
 }
