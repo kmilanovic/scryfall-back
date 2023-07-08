@@ -128,4 +128,52 @@ public class ScryfallHandler {
         cardList.add(responseEntity.getBody());
         return cardList;
     }
+
+    public List<CardResponse> getCardByMultiverse(CardRequest cardRequest) {
+        String url = scryfallUrl + "cards/multiverse/" + cardRequest.getMultiverseId();
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.encode().build().toUri(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CardResponse> cardList = new ArrayList<>();
+        cardList.add(responseEntity.getBody());
+        return cardList;
+    }
+
+    public List<CardResponse> getCardByCatalog(CardRequest cardRequest) {
+        String url = scryfallUrl + "cards/mtgo/" + cardRequest.getMtgoId();
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.encode().build().toUri(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CardResponse> cardList = new ArrayList<>();
+        cardList.add(responseEntity.getBody());
+        return cardList;
+    }
+
+    public List<CardResponse> getCardByCardId(CardRequest cardRequest) {
+        String url = scryfallUrl + "cards/" + cardRequest.getId();
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.encode().build().toUri(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CardResponse> cardList = new ArrayList<>();
+        cardList.add(responseEntity.getBody());
+        return cardList;
+    }
 }

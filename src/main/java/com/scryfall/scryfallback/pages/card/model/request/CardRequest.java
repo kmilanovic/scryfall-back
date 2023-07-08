@@ -7,4 +7,6 @@ import lombok.Setter;
 @Setter
 public class CardRequest {
     private String id;
+    private String multiverseId;
+    private String mtgoId;
 }

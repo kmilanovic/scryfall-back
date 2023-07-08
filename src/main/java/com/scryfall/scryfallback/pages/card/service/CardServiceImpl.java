@@ -97,4 +97,19 @@ public class CardServiceImpl implements CardService {
     public List<CardResponse> getRandomCard() {
         return scryfallHandler.getRandomCard();
     }
+
+    @Override
+    public List<CardResponse> getCardByMultiverse(CardRequest cardRequest) {
+        return scryfallHandler.getCardByMultiverse(cardRequest);
+    }
+
+    @Override
+    public List<CardResponse> getCardByCatalog(CardRequest cardRequest) {
+        return scryfallHandler.getCardByCatalog(cardRequest);
+    }
+
+    @Override
+    public List<CardResponse> getCardByCardId(CardRequest cardRequest) {
+        return scryfallHandler.getCardByCardId(cardRequest);
+    }
 }

@@ -70,4 +70,19 @@ public class CardController {
     public List<CardResponse> getRandomCard() {
         return cardService.getRandomCard();
     }
+
+    @PostMapping("by-multiverse")
+    public List<CardResponse> getCardByMultiverse(@RequestBody CardRequest cardRequest) {
+        return cardService.getCardByMultiverse(cardRequest);
+    }
+
+    @PostMapping("by-catalog")
+    public List<CardResponse> getCardByCatalog(@RequestBody CardRequest cardRequest) {
+        return cardService.getCardByCatalog(cardRequest);
+    }
+
+    @PostMapping("by-id")
+    public List<CardResponse> getCardByCardId(@RequestBody CardRequest cardRequest) {
+        return cardService.getCardByCardId(cardRequest);
+    }
 }

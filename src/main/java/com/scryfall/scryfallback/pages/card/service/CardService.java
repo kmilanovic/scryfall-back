@@ -31,4 +31,10 @@ public interface CardService {
     Page<Card> getCardsBySet(ByIdCommand command, int pageIndex, int pageSize);
 
     List<CardResponse> getRandomCard();
+
+    List<CardResponse> getCardByMultiverse(CardRequest cardRequest);
+
+    List<CardResponse> getCardByCatalog(CardRequest cardRequest);
+
+    List<CardResponse> getCardByCardId(CardRequest cardRequest);
 }
