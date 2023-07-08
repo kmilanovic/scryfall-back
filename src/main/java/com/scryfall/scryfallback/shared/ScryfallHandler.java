@@ -18,6 +18,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Component
 @Slf4j
@@ -108,5 +111,21 @@ public class ScryfallHandler {
                 }
         );
         return responseEntity.getBody();
+    }
+
+    public List<CardResponse> getRandomCard() {
+        String url = scryfallUrl + "cards/random";
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                uriComponentsBuilder.encode().build().toUri(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        List<CardResponse> cardList = new ArrayList<>();
+        cardList.add(responseEntity.getBody());
+        return cardList;
     }
 }

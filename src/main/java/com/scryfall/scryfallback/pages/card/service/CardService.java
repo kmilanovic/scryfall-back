@@ -29,4 +29,6 @@ public interface CardService {
     List<Card> getCardsBySet(ByIdCommand command);
 
     Page<Card> getCardsBySet(ByIdCommand command, int pageIndex, int pageSize);
+
+    List<CardResponse> getRandomCard();
 }

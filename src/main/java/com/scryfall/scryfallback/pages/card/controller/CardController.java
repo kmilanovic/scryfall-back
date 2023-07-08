@@ -65,4 +65,9 @@ public class CardController {
             @RequestParam(defaultValue = "10") int pageSize) {
         return cardService.getCardsBySet(command, pageIndex, pageSize);
     }
+
+    @GetMapping("random")
+    public List<CardResponse> getRandomCard() {
+        return cardService.getRandomCard();
+    }
 }

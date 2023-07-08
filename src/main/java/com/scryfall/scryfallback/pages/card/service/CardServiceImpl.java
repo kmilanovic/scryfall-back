@@ -92,4 +92,9 @@ public class CardServiceImpl implements CardService {
 
         return new PageImpl<>(cards, pageable, cardPage.getTotalElements());
     }
+
+    @Override
+    public List<CardResponse> getRandomCard() {
+        return scryfallHandler.getRandomCard();
+    }
 }
