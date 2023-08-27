@@ -31,7 +31,8 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
     private final SetRepository setRepository;
 
-    public CardServiceImpl(ScryfallHandler scryfallHandler, CardRepository cardRepository, SetRepository setRepository) {
+    public CardServiceImpl(ScryfallHandler scryfallHandler, CardRepository cardRepository,
+                           SetRepository setRepository) {
         this.scryfallHandler = scryfallHandler;
         this.cardRepository = cardRepository;
         this.setRepository = setRepository;

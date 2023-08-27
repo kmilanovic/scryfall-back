@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -132,48 +133,87 @@ public class ScryfallHandler {
     public List<CardResponse> getCardByMultiverse(CardRequest cardRequest) {
         String url = scryfallUrl + "cards/multiverse/" + cardRequest.getMultiverseId();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
-                uriComponentsBuilder.encode().build().toUri(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-        );
-
-        List<CardResponse> cardList = new ArrayList<>();
-        cardList.add(responseEntity.getBody());
-        return cardList;
+        try {
+            ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                    uriComponentsBuilder.encode().build().toUri(),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+            if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                List<CardResponse> cardList = new ArrayList<>();
+                cardList.add(responseEntity.getBody());
+                return cardList;
+            }
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                throw e;
+            }
+        } catch (HttpServerErrorException e) {
+            throw e;
+        }
     }
 
     public List<CardResponse> getCardByCatalog(CardRequest cardRequest) {
         String url = scryfallUrl + "cards/mtgo/" + cardRequest.getMtgoId();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
-                uriComponentsBuilder.encode().build().toUri(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-        );
-
-        List<CardResponse> cardList = new ArrayList<>();
-        cardList.add(responseEntity.getBody());
-        return cardList;
+        try {
+            ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                    uriComponentsBuilder.encode().build().toUri(),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+            if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                List<CardResponse> cardList = new ArrayList<>();
+                cardList.add(responseEntity.getBody());
+                return cardList;
+            }
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                throw e;
+            }
+        } catch (HttpServerErrorException e) {
+            throw e;
+        }
     }
 
     public List<CardResponse> getCardByCardId(CardRequest cardRequest) {
         String url = scryfallUrl + "cards/" + cardRequest.getId();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
-                uriComponentsBuilder.encode().build().toUri(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-        );
-
-        List<CardResponse> cardList = new ArrayList<>();
-        cardList.add(responseEntity.getBody());
-        return cardList;
+        try {
+            ResponseEntity<CardResponse> responseEntity = restTemplate.exchange(
+                    uriComponentsBuilder.encode().build().toUri(),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+            if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                List<CardResponse> cardList = new ArrayList<>();
+                cardList.add(responseEntity.getBody());
+                return cardList;
+            }
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new ArrayList<>();
+            } else {
+                throw e;
+            }
+        } catch (HttpServerErrorException e) {
+            throw e;
+        }
     }
 }

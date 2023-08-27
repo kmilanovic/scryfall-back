@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
-    Card save(Card card);
 
     @Query("SELECT c FROM Card c JOIN c.sets s WHERE s.set_id = :setId")
     Page<Card> findCardsBySetId(@Param("setId") Long setId, Pageable pageable);
