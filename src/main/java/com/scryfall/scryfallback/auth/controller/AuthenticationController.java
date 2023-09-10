@@ -4,6 +4,9 @@ import com.scryfall.scryfallback.auth.model.dto.AuthenticationResponse;
 import com.scryfall.scryfallback.auth.model.dto.LoginRequest;
 import com.scryfall.scryfallback.auth.model.dto.RegisterRequest;
 import com.scryfall.scryfallback.auth.service.AuthenticationService;
+import com.scryfall.scryfallback.shared.exception.AuthenticationFailedException;
+import com.scryfall.scryfallback.shared.exception.EmailAlreadyExistsException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,14 +26,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        try {
+            AuthenticationResponse response = authenticationService.register(request);
+            return ResponseEntity.ok(response);
+        } catch (EmailAlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            AuthenticationResponse response = authenticationService.authenticate(request);
+            return ResponseEntity.ok(response);
+        } catch (AuthenticationFailedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed: " + e.getMessage());
+        }
     }
 }

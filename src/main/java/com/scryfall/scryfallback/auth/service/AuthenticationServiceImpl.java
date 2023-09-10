@@ -5,6 +5,8 @@ import com.scryfall.scryfallback.auth.model.dto.LoginRequest;
 import com.scryfall.scryfallback.auth.model.dto.RegisterRequest;
 import com.scryfall.scryfallback.auth.model.entity.User;
 import com.scryfall.scryfallback.auth.repository.UserRepository;
+import com.scryfall.scryfallback.shared.exception.AuthenticationFailedException;
+import com.scryfall.scryfallback.shared.exception.EmailAlreadyExistsException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new EmailAlreadyExistsException("Email already exists");
+        }
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -42,20 +47,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse authenticate(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .token(jwtToken)
-                .build();
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+            var user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow();
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .id(user.getId())
+                    .email(user.getEmail())
+                    .token(jwtToken)
+                    .build();
+        } catch (RuntimeException e) {
+            throw new AuthenticationFailedException(e.getMessage());
+        }
     }
 }
 
