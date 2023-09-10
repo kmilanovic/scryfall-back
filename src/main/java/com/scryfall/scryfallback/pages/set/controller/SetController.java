@@ -61,7 +61,7 @@ public class SetController {
     }
 
     @PostMapping("/price")
-    public Double getSetPrice(@RequestBody List<String> cardIds) {
-        return setService.getSetPrice(cardIds);
+    public Double getSetPrice(@RequestBody Long setId) {
+        return setService.getSetPrice(setId);
     }
 }

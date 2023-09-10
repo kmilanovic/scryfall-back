@@ -28,5 +28,5 @@ public interface SetService {
 
     void deleteCardFromSet(Long setId, Long cardId);
 
-    Double getSetPrice(List<String> cardIds);
+    Double getSetPrice(Long setId);
 }

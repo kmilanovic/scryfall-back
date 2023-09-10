@@ -1,10 +1,13 @@
 package com.scryfall.scryfallback.shared;
 
+import com.scryfall.scryfallback.pages.card.model.entity.Card;
 import com.scryfall.scryfallback.pages.card.model.request.CardRequest;
 import com.scryfall.scryfallback.pages.card.model.response.CardResponse;
 import com.scryfall.scryfallback.pages.card.model.response.CardWrapper;
+import com.scryfall.scryfallback.pages.set.model.entity.Set;
 import com.scryfall.scryfallback.pages.set.model.request.SetRequest;
 import com.scryfall.scryfallback.pages.set.model.response.SetWrapper;
+import com.scryfall.scryfallback.pages.set.repository.SetRepository;
 import com.scryfall.scryfallback.shared.model.RulingWrapper;
 import com.scryfall.scryfallback.shared.model.SearchTerm;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Component
@@ -28,12 +32,14 @@ import java.util.List;
 public class ScryfallHandler {
 
     private final RestTemplate restTemplate;
+    private final SetRepository setRepository;
     @Value("${scryfall.url}")
     protected String scryfallUrl;
 
 
-    public ScryfallHandler(RestTemplate restTemplate) {
+    public ScryfallHandler(RestTemplate restTemplate, SetRepository setRepository) {
         this.restTemplate = restTemplate;
+        this.setRepository = setRepository;
     }
 
     public CardResponse getCardById(CardRequest cardRequest) {
@@ -217,11 +223,15 @@ public class ScryfallHandler {
         }
     }
 
-    public Double getSetPrice(List<String> cardIds) {
+    public Double getSetPrice(Long setId) {
         try {
             double totalPriceUSD = 0.0;
+            Optional<Set> set = setRepository.findById(setId);
+            List<Card> cards = set.get().getCards();
+
             CardRequest cardRequest = new CardRequest();
-            for (String cardId : cardIds) {
+            for (Card card : cards) {
+                String cardId = card.getId();
                 cardRequest.setId(cardId);
                 CardResponse cardResponse = getCardById(cardRequest);
                 if (cardResponse != null && cardResponse.getPrices() != null) {
@@ -231,6 +241,9 @@ public class ScryfallHandler {
                     }
                 }
             }
+            totalPriceUSD = totalPriceUSD * 100;
+            totalPriceUSD = Math.round(totalPriceUSD);
+            totalPriceUSD = totalPriceUSD / 100;
             return totalPriceUSD;
         } catch (Exception e) {
             throw new RuntimeException("Error calculating total price", e);
