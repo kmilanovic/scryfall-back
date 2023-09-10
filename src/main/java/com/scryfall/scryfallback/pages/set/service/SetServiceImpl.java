@@ -75,6 +75,11 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
+    public Double getSetPrice(List<String> cardIds) {
+        return scryfallHandler.getSetPrice(cardIds);
+    }
+
+    @Override
     public Set addSet(Set set) {
         return setRepository.save(set);
     }

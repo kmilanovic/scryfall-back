@@ -59,4 +59,9 @@ public class SetController {
             @PathVariable Long cardId) {
         setService.deleteCardFromSet(setId, cardId);
     }
+
+    @PostMapping("/price")
+    public Double getSetPrice(@RequestBody List<String> cardIds) {
+        return setService.getSetPrice(cardIds);
+    }
 }

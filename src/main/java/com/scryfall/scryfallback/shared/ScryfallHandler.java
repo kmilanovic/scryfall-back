@@ -216,4 +216,24 @@ public class ScryfallHandler {
             throw e;
         }
     }
+
+    public Double getSetPrice(List<String> cardIds) {
+        try {
+            double totalPriceUSD = 0.0;
+            CardRequest cardRequest = new CardRequest();
+            for (String cardId : cardIds) {
+                cardRequest.setId(cardId);
+                CardResponse cardResponse = getCardById(cardRequest);
+                if (cardResponse != null && cardResponse.getPrices() != null) {
+                    String usdPrice = cardResponse.getPrices().getUsd();
+                    if (usdPrice != null && !usdPrice.isEmpty()) {
+                        totalPriceUSD += Double.parseDouble(usdPrice);
+                    }
+                }
+            }
+            return totalPriceUSD;
+        } catch (Exception e) {
+            throw new RuntimeException("Error calculating total price", e);
+        }
+    }
 }
